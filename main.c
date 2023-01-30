@@ -6,11 +6,13 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 14:15:52 by oboucher          #+#    #+#             */
-/*   Updated: 2023/01/30 14:16:05 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/01/30 16:32:15 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "get_next_line.h"
+
 int main(void)
 {
-    
+    get_next_line(0);
 }

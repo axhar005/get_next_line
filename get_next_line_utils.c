@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 12:09:06 by oboucher          #+#    #+#             */
-/*   Updated: 2023/01/30 13:16:06 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/01/30 16:38:30 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,17 @@ void	*ft_calloc(size_t count, size_t size)
 
 size_t ft_strlen(char *str)
 {
-    int i;
+    size_t i;
 
     i = 0;
-    if (!str)
-        return (0);
-    while (str[i])
+    while (str && str[i])
     {
         i++;
     }
     return (i);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	size_t	s1_len;
 	size_t	s2_len;
