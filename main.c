@@ -6,13 +6,19 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 14:15:52 by oboucher          #+#    #+#             */
-/*   Updated: 2023/01/30 16:32:15 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/01/31 17:36:45 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 int main(void)
 {
-    get_next_line(0);
+    int fd = open("test.txt", O_RDONLY);
+    printf("%s", get_next_line(fd));
+    printf("%s", get_next_line(fd));
+    printf("%s", get_next_line(fd));
+    printf("%s", get_next_line(fd));
+    close(fd);
 }

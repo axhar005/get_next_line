@@ -6,18 +6,19 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 12:09:11 by oboucher          #+#    #+#             */
-/*   Updated: 2023/01/30 16:38:42 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/01/31 17:03:25 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 2
 # endif
 
 # include <stdlib.h>
 # include <unistd.h>
+# include <fcntl.h>
 
 //prototype
 void	bzero(void *b, size_t len);
