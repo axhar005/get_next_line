@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 12:09:03 by oboucher          #+#    #+#             */
-/*   Updated: 2023/01/31 17:06:17 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/01/31 18:02:55 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*get_next_line(int fd)
         else
         {
             str = ft_strjoin(str, new);
-            break;
+            return (ft_memcpy(str, new, ));
         } 
 	}
 	return (str);
