@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 12:09:03 by oboucher          #+#    #+#             */
-/*   Updated: 2023/01/31 18:02:55 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/02/01 14:03:34 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,35 +26,60 @@ size_t	ft_find(char *str)
 	}
 	return (0);
 }
+char *ft_small_split(char *buffer, size_t pos)
+{
+	char	*fline;
+	char	*fnew;
+	size_t i;
+	
+	i = pos;
+	fline = ft_calloc((BUFFER_SIZE - i) + 1, sizeof(char));
+	if (!fline)
+		return (ft_sfree(fline));
+	while (i-- >= 0)
+		fline[i] = buffer[i];
+	buffer = ft_strjoin(NULL, &buffer[i+1]);
+	return (fline);
+}
 
 char	*get_next_line(int fd)
 {
-	char		*str;
+	char		*line;
 	static char	*new;
-
-	str = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	if (!str)
-		return (ft_sfree(str));
+	size_t 		new_line_pos;
+	
+	new_line_pos = 0;
+	line = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	if (!line)
+		return (ft_sfree(line));
     if (!new)
     {
 	    new = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	    if (!new)
 		    return (ft_sfree(new));
     }
-    else
-    {
-        if (ft_find(new) > 0)
-            str = ft_strjoin(str, new + ft_find(new) + 1);
-    }
-    while (read(fd, new, BUFFER_SIZE) != 0)
+	else
 	{
-        if (ft_find(new) == 0)
-            str = ft_strjoin(str, new);
-        else
-        {
-            str = ft_strjoin(str, new);
-            return (ft_memcpy(str, new, ));
-        } 
+		new_line_pos = ft_find(new);
+		if (new_line_pos != 0)
+		{
+			line = ft_small_split(new, );
+			return (line);
+		}
+		else
+		{
+			if (new[0] == '\n')
+				return (&c);
+			line = ft_strjoin(line, new);
+			new = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	    	if (!new)
+		    	return (ft_sfree(new));
+		}
 	}
-	return (str);
+	while (read(fd, new, BUFFER_SIZE))
+	{
+		/* code */
+	}
+	
+	return (line);
 }

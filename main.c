@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 14:15:52 by oboucher          #+#    #+#             */
-/*   Updated: 2023/01/31 17:52:02 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/02/01 12:02:06 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 int main(void)
 {
     int fd = open("test.txt", O_RDONLY);
-    printf("|0|%s\n", get_next_line(fd));
-    printf("|0|%s\n", get_next_line(fd));
+    printf("|1|%s", get_next_line(fd));
     close(fd);
 }
