@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 12:09:03 by oboucher          #+#    #+#             */
-/*   Updated: 2023/02/01 14:03:34 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/02/02 15:29:24 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,19 @@ char *ft_small_split(char *buffer, size_t pos)
 {
 	char	*fline;
 	char	*fnew;
-	size_t i;
-	
-	i = pos;
-	fline = ft_calloc((BUFFER_SIZE - i) + 1, sizeof(char));
+
+	fline = ft_calloc(pos + 1, sizeof(char));
 	if (!fline)
 		return (ft_sfree(fline));
-	while (i-- >= 0)
-		fline[i] = buffer[i];
-	buffer = ft_strjoin(NULL, &buffer[i+1]);
+	while (pos--)
+		fline[pos] = buffer[pos];
 	return (fline);
 }
 
 char	*get_next_line(int fd)
 {
 	char		*line;
+	char 		*temp;
 	static char	*new;
 	size_t 		new_line_pos;
 	
@@ -63,22 +61,47 @@ char	*get_next_line(int fd)
 		new_line_pos = ft_find(new);
 		if (new_line_pos != 0)
 		{
-			line = ft_small_split(new, );
-			return (line);
+			line = ft_small_split(new, new_line_pos);
+			temp = new;
+			new = ft_strjoin(NULL, &new[new_line_pos+1]);
+			return (ft_sfree(temp), line);
 		}
 		else
 		{
 			if (new[0] == '\n')
-				return (&c);
+			{
+				line[0] = '\n';
+				line[1] = '\0';
+				return (line);
+			}
 			line = ft_strjoin(line, new);
 			new = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	    	if (!new)
 		    	return (ft_sfree(new));
 		}
 	}
-	while (read(fd, new, BUFFER_SIZE))
+	while (read(fd, new, BUFFER_SIZE) != 0)
 	{
-		/* code */
+		new_line_pos = ft_find(new);
+		if (new_line_pos == 0)
+		{
+			if  (new[new_line_pos] == '\n')
+			{
+				line = ft_strjoin(line, "\n\0");
+				return (line);
+			}
+			else
+			{
+				line = ft_strjoin(line, new);
+			}
+		}
+		else
+		{
+			line = ft_small_split(new, new_line_pos);
+			temp = new;
+			new = ft_strjoin(NULL, &new[new_line_pos+1]);
+			return (ft_sfree(temp), line);
+		}
 	}
 	
 	return (line);
