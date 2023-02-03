@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 12:09:03 by oboucher          #+#    #+#             */
-/*   Updated: 2023/02/02 15:29:24 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/02/03 14:34:17 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,88 +21,60 @@ size_t	ft_find(char *str)
 	while (str[i])
 	{
 		if (str[i] == '\n')
-			return (i);
+			return (1);
 		i++;
 	}
 	return (0);
 }
-char *ft_small_split(char *buffer, size_t pos)
+char *ft_small_split(char *line, size_t *pos)
 {
-	char	*fline;
-	char	*fnew;
-
-	fline = ft_calloc(pos + 1, sizeof(char));
-	if (!fline)
-		return (ft_sfree(fline));
-	while (pos--)
-		fline[pos] = buffer[pos];
-	return (fline);
+	char	*fnext_line;
+	size_t 	i;
+	
+	i = 0;
+	while (line[i])
+		if (line[i++] == '\n')
+			break ;
+	*pos = i;
+	fnext_line = ft_calloc(i + 2, sizeof(char));
+	if (!fnext_line)
+		return (ft_sfree(fnext_line));
+	while (i--)
+		fnext_line[i] = line[i];
+	return (fnext_line);
 }
 
 char	*get_next_line(int fd)
 {
-	char		*line;
-	char 		*temp;
-	static char	*new;
-	size_t 		new_line_pos;
+	char		*buffer;
+	char		*next_line;
+	static char	*line;
+	int			x;
+	size_t 		pos;
 	
-	new_line_pos = 0;
-	line = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	if (!line)
-		return (ft_sfree(line));
-    if (!new)
+	
+	buffer = ft_calloc(1, sizeof(char));
+	if (!buffer)
+		return (ft_sfree(buffer));
+	next_line = ft_calloc(1, sizeof(char));
+	if (!next_line)
+		return (ft_sfree(next_line));
+    if (!line)
     {
-	    new = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	    if (!new)
-		    return (ft_sfree(new));
-    }
-	else
-	{
-		new_line_pos = ft_find(new);
-		if (new_line_pos != 0)
-		{
-			line = ft_small_split(new, new_line_pos);
-			temp = new;
-			new = ft_strjoin(NULL, &new[new_line_pos+1]);
-			return (ft_sfree(temp), line);
-		}
-		else
-		{
-			if (new[0] == '\n')
-			{
-				line[0] = '\n';
-				line[1] = '\0';
-				return (line);
-			}
-			line = ft_strjoin(line, new);
-			new = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	    	if (!new)
-		    	return (ft_sfree(new));
-		}
+	    line = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	    if (!line)
+		    return (ft_sfree(line));
 	}
-	while (read(fd, new, BUFFER_SIZE) != 0)
+	pos = 0;
+	while (ft_find(line) == 0)
 	{
-		new_line_pos = ft_find(new);
-		if (new_line_pos == 0)
-		{
-			if  (new[new_line_pos] == '\n')
-			{
-				line = ft_strjoin(line, "\n\0");
-				return (line);
-			}
-			else
-			{
-				line = ft_strjoin(line, new);
-			}
-		}
-		else
-		{
-			line = ft_small_split(new, new_line_pos);
-			temp = new;
-			new = ft_strjoin(NULL, &new[new_line_pos+1]);
-			return (ft_sfree(temp), line);
-		}
+		buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+		x = read(fd, buffer, BUFFER_SIZE);
+			if (x <= 0)
+				break;
+		line = ft_strjoin(line, buffer);
 	}
-	
-	return (line);
+	next_line = ft_strjoin(next_line, ft_small_split(line, &pos));
+	line = ft_strjoin(line + pos, NULL);
+	return (next_line);
 }

@@ -6,14 +6,14 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 12:09:11 by oboucher          #+#    #+#             */
-/*   Updated: 2023/02/01 11:53:59 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/02/03 14:26:27 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
+#  define BUFFER_SIZE 20
 # endif
 
 # include <stdlib.h>

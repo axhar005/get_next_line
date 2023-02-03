@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 12:09:06 by oboucher          #+#    #+#             */
-/*   Updated: 2023/01/31 19:46:23 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/02/03 12:03:46 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ size_t	ft_strlen(char *str)
 	size_t	i;
 
 	i = 0;
-	while (str && str[i])
+	while (str[i])
 	{
 		i++;
 	}
