@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 12:09:06 by oboucher          #+#    #+#             */
-/*   Updated: 2023/02/03 12:03:46 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/02/08 19:31:34 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,8 @@ size_t	ft_strlen(char *str)
 	size_t	i;
 
 	i = 0;
-	while (str[i])
-	{
+	while (str && str[i])
 		i++;
-	}
 	return (i);
 }
 
@@ -54,8 +52,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	size_t s2_len;
 	char *new;
 
-	if (!s1 || !s2)
-		return (NULL);
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
 	new = ft_calloc(s1_len + s2_len + 1, sizeof(char));

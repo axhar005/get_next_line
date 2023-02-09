@@ -6,12 +6,12 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 12:09:03 by oboucher          #+#    #+#             */
-/*   Updated: 2023/02/03 14:34:17 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/02/08 20:21:53 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include "stdio.h"
+#include <stdio.h>
 
 size_t	ft_find(char *str)
 {
@@ -26,13 +26,14 @@ size_t	ft_find(char *str)
 	}
 	return (0);
 }
+
 char *ft_small_split(char *line, size_t *pos)
 {
 	char	*fnext_line;
 	size_t 	i;
 	
 	i = 0;
-	while (line[i])
+	while (line[i] && line[i] != '\n')
 		if (line[i++] == '\n')
 			break ;
 	*pos = i;
@@ -46,35 +47,29 @@ char *ft_small_split(char *line, size_t *pos)
 
 char	*get_next_line(int fd)
 {
-	char		*buffer;
-	char		*next_line;
 	static char	*line;
-	int			x;
-	size_t 		pos;
-	
-	
-	buffer = ft_calloc(1, sizeof(char));
-	if (!buffer)
-		return (ft_sfree(buffer));
-	next_line = ft_calloc(1, sizeof(char));
-	if (!next_line)
-		return (ft_sfree(next_line));
+	t_var		var;
+
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > OPEN_MAX)
+		return (line = ft_sfree(line));
+	var.buffer = ft_calloc(1, sizeof(char));
+	if (!var.buffer)
+		return (ft_sfree(var.buffer));
+	var.next_line = ft_calloc(1, sizeof(char));
+	if (!var.next_line)
+		return (ft_sfree(var.next_line));
     if (!line)
-    {
-	    line = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	    if (!line)
-		    return (ft_sfree(line));
-	}
-	pos = 0;
+	    line = ft_calloc(1, sizeof(char));
+	var.pos = 0;
 	while (ft_find(line) == 0)
 	{
-		buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-		x = read(fd, buffer, BUFFER_SIZE);
-			if (x <= 0)
+		var.buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+		var.rd = read(fd, var.buffer, BUFFER_SIZE);
+			if (var.rd <= 0)
 				break;
-		line = ft_strjoin(line, buffer);
+		line = ft_strjoin(line, var.buffer);
 	}
-	next_line = ft_strjoin(next_line, ft_small_split(line, &pos));
-	line = ft_strjoin(line + pos, NULL);
-	return (next_line);
+	var.next_line = ft_small_split(line, &var.pos);
+	line = ft_strjoin(NULL, &line[var.pos]);
+	return (var.next_line);
 }
