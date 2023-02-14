@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 12:09:03 by oboucher          #+#    #+#             */
-/*   Updated: 2023/02/13 15:25:27 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/02/13 15:29:55 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_find(char *str)
 {
@@ -46,28 +46,28 @@ char *ft_small_split(char *line, size_t *pos)
 
 char	*get_next_line(int fd)
 {
-	static char	*line;
+	static char	*line[OPEN_MAX];
 	t_var		var;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || fd > OPEN_MAX)
-		return (line = ft_sfree(line));
-    if (!line)
-	    line = ft_calloc(1, sizeof(char));
+		return (line[fd] = ft_sfree(line[fd]));
+    if (!line[fd])
+	    line[fd] = ft_calloc(1, sizeof(char));
 	var.buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	var.pos = 0;
-	while (ft_find(line) == 0)
+	while (ft_find(line[fd]) == 0)
 	{
 		ft_bzero(var.buffer, BUFFER_SIZE + 1);
 		var.rd = read(fd, var.buffer, BUFFER_SIZE);
 			if (var.rd <= 0)
 				break;
-		line = ft_strjoin(line, var.buffer);
+		line[fd] = ft_strjoin(line[fd], var.buffer);
 	}
 	var.buffer = ft_sfree(var.buffer);
-	if (var.rd == -1 || (var.rd <= 0 && *line == 0))
-		return (line = ft_sfree(line), NULL);
-	var.next_line = ft_small_split(line, &var.pos);
-	var.buffer = line;
-	line = ft_strjoin(NULL, line + var.pos);
+	if (var.rd == -1 || (var.rd <= 0 && *line[fd] == 0))
+		return (line[fd] = ft_sfree(line[fd]), NULL);
+	var.next_line = ft_small_split(line[fd], &var.pos);
+	var.buffer = line[fd];
+	line[fd] = ft_strjoin(NULL, line[fd] + var.pos);
 	return (ft_sfree(var.buffer), var.next_line);
 }
