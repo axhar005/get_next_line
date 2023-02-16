@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 12:09:06 by oboucher          #+#    #+#             */
-/*   Updated: 2023/02/13 14:17:15 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/02/16 12:41:31 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ size_t	ft_strlen(char *str)
 
 char	*ft_strjoin(char *s1, char *s2)
 {
-	size_t s1_len;
-	size_t s2_len;
-	char *new;
+	size_t	s1_len;
+	size_t	s2_len;
+	char	*new;
 
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);

@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 12:09:11 by oboucher          #+#    #+#             */
-/*   Updated: 2023/02/13 15:23:49 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/02/16 12:40:05 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_var
 {
 	char	*buffer;
 	char	*next_line;
-    int     rd;
+	int		rd;
 	size_t	pos;
 }			t_var;
 

@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 12:09:03 by oboucher          #+#    #+#             */
-/*   Updated: 2023/02/13 15:25:27 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/02/16 12:40:15 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ size_t	ft_find(char *str)
 	return (0);
 }
 
-char *ft_small_split(char *line, size_t *pos)
+char	*ft_small_split(char *line, size_t *pos)
 {
 	char	*fnext_line;
-	size_t 	i;
-	
+	size_t	i;
+
 	i = 0;
 	while (line[i])
 		if (line[i++] == '\n')
@@ -51,16 +51,16 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || fd > OPEN_MAX)
 		return (line = ft_sfree(line));
-    if (!line)
-	    line = ft_calloc(1, sizeof(char));
+	if (!line)
+		line = ft_calloc(1, sizeof(char));
 	var.buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	var.pos = 0;
 	while (ft_find(line) == 0)
 	{
 		ft_bzero(var.buffer, BUFFER_SIZE + 1);
 		var.rd = read(fd, var.buffer, BUFFER_SIZE);
-			if (var.rd <= 0)
-				break;
+		if (var.rd <= 0)
+			break ;
 		line = ft_strjoin(line, var.buffer);
 	}
 	var.buffer = ft_sfree(var.buffer);
